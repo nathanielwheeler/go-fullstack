@@ -4,8 +4,8 @@ import (
   "net/http"
   "strings"
 
-  "github.com/nathanielwheeler/fullstack/context"
-  "github.com/nathanielwheeler/fullstack/models"
+  "github.com/nathanielwheeler/go-fullstack/context"
+  "github.com/nathanielwheeler/go-fullstack/models"
 )
 
 // User middleware will lookup the current user via their remember token cookie using the UserService.  If found, they will be set on the request context.  Either way, the next handler is always called.

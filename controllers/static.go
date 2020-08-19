@@ -1,7 +1,7 @@
 package controllers
 
 import (
-  "github.com/nathanielwheeler/fullstack/views"
+  "github.com/nathanielwheeler/go-fullstack/views"
 )
 
 // Static : A type that holds the views of the static pages

@@ -4,10 +4,10 @@ import (
   "fmt"
   "net/http"
 
-  "github.com/nathanielwheeler/fullstack/controllers"
-  "github.com/nathanielwheeler/fullstack/middleware"
-  "github.com/nathanielwheeler/fullstack/models"
-  "github.com/nathanielwheeler/fullstack/rand"
+  "github.com/nathanielwheeler/go-fullstack/controllers"
+  "github.com/nathanielwheeler/go-fullstack/middleware"
+  "github.com/nathanielwheeler/go-fullstack/models"
+  "github.com/nathanielwheeler/go-fullstack/rand"
 
   "github.com/gorilla/csrf"
 	"github.com/gorilla/mux"

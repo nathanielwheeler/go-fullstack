@@ -9,7 +9,7 @@ import (
   "net/url"
   "path/filepath"
 
-  "github.com/nathanielwheeler/fullstack/context"
+  "github.com/nathanielwheeler/go-fullstack/context"
 
   "github.com/gorilla/csrf"
 )

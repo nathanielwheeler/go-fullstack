@@ -3,7 +3,7 @@ package context
 import (
   "context"
 
-  "github.com/nathanielwheeler/fullstack/models"
+  "github.com/nathanielwheeler/go-fullstack/models"
 )
 
 // NOTE these should never be exported.  This prevents outside code from changing these values.

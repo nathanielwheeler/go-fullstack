@@ -3,14 +3,15 @@ package views
 import (
 	"log"
 
-	"github.com/nathanielwheeler/fullstack/models"
+	"github.com/nathanielwheeler/go-fullstack/models"
 )
 
 // Data is the top level structure that views expect data to come in.
 type Data struct {
-	Alert *Alert
-	User  *models.User
-	Yield interface{}
+	Alert  *Alert
+	User   *models.User
+	Yield  interface{}
+	Script Javascript
 }
 
 // PublicError is an interface applying to errors that have a Public method attached to them.

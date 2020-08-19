@@ -4,8 +4,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/nathanielwheeler/fullstack/hash"
-	"github.com/nathanielwheeler/fullstack/rand"
+	"github.com/nathanielwheeler/go-fullstack/hash"
+	"github.com/nathanielwheeler/go-fullstack/rand"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres" // Not directly used, but needed to help gorm communicate with postgres

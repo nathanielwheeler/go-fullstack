@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/nathanielwheeler/fullstack/context"
-	"github.com/nathanielwheeler/fullstack/models"
-	"github.com/nathanielwheeler/fullstack/views"
+	"github.com/nathanielwheeler/go-fullstack/context"
+	"github.com/nathanielwheeler/go-fullstack/models"
+	"github.com/nathanielwheeler/go-fullstack/views"
 
 	"github.com/gorilla/mux"
 )
