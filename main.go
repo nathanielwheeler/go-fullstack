@@ -1,84 +1,36 @@
 package main
 
 import (
-  "fmt"
-  "net/http"
+	"fmt"
+	"net/http"
 
-  "github.com/nathanielwheeler/go-fullstack/controllers"
-  "github.com/nathanielwheeler/go-fullstack/middleware"
-  "github.com/nathanielwheeler/go-fullstack/models"
-  "github.com/nathanielwheeler/go-fullstack/rand"
-
-  "github.com/gorilla/csrf"
-	"github.com/gorilla/mux"
+  "github.com/gorilla/mux"
+  
+  "github.com/nathanielwheeler/go-fullstack/api/controllers"
+  "github.com/nathanielwheeler/go-fullstack/api/models"
 )
 
 func main() {
-	// Load Configuration
-	cfg := LoadConfig()
-	dbCfg := cfg.Database
+  // Initialize services
+  services, err := services.NewValuesService
 
-  // Initialize Services
-  services, err := models.NewServices(
-    models.WithGorm(dbCfg.Dialect(), dbCfg.ConnectionString()),
-    models.WithLogMode(!cfg.IsProd()),
-    models.WithUser(cfg.Pepper, cfg.HMACKey)
-  )
-  defer services.Close()
-  services.AutoMigrate()
-
-  // Router initialization
+	// Router Initialization
   r := mux.NewRouter()
-
-  // Initialize controllers
-  staticC := controllers.NewStatic()
-  usersC := controllers.NewUsers(services.User)
-  valuesC := controllers.NewValues(services.Values)
-
-  // Middleware
-	userMw := middleware.User{UserService: services.User}
-	requireUserMw := middleware.RequireUser{}
-
-	// CSRF Protection
-	b, err := rand.Bytes(cfg.CSRFBytes)
-	if err != nil {
-		panic(err)
-	}
-  csrfMw := csrf.Protect(b, csrf.Secure(cfg.IsProd()))
-
-  // FileServer
-  publicHandler := http.FileServer(http.Dir("./public/"))
-	r.PathPrefix("/assets/").
-		Handler(publicHandler)
   
-  // Static Routes
-  r.handle("/", staticC.Home).
-    Methods("GET")
+  // Initialize controllers
+  valuesC := controllers.NewValues(services.Value)
 
-  // User Routes
-  r.HandleFunc("/register",
-    usersC.Registration).
-    Methods("GET")
-  r.HandleFunc("/register",
-    usersC.Register).
-    Methods("POST")
-  r.Handle("/login",
-    usersC.LoginView).
-    Methods("GET")
-  r.HandleFunc("/login",
-    usersC.Login).
-    Methods("POST")
-  r.HandleFunc("/cookietest",
-    usersC.CookieTest).
-    Methods("GET")
+	// Asset Routes
+	assetHandler := http.FileServer(http.Dir("./client/assets/"))
+	r.PathPrefix("/css/").Handler(assetHandler)
+	apphandler := http.FileServer(http.Dir("./client/app/js"))
+  r.PathPrefix("/js/").Handler(apphandler)
 
-  // Values Routes
-  r.HandleFunc("/values").
-    Methods("GET")
+	// Value Routes
+	r.HandleFunc("/", valuesC.Index).Methods("GET")
 
-  // Start server
-  port := fmt.Sprintf(":%d", cfg.Port)
+	// Start server
+	port := fmt.Sprintf(":%d", 6789)
 	fmt.Printf("Now listening on %s...\n", port)
-	http.ListenAndServe(port, csrfMw(userMw.Apply(r)))
+	http.ListenAndServe(port, r)
 }
-
