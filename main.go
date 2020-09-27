@@ -12,7 +12,7 @@ import (
 
 func main() {
   // Initialize services
-  services, err := services.NewValuesService
+  services, err := models.NewServices()
 
 	// Router Initialization
   r := mux.NewRouter()
